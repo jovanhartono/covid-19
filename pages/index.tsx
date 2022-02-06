@@ -110,7 +110,7 @@ const Home: NextPage<string> = ({value}: string) => {
 
     return (
         <div>
-            Hello
+            {value.title}
         </div>
         // <div
         //     className="flex justify-center prose prose-gray prose-lg sm:prose-xl xl:prose-2xl bg-gray-50 max-w-none prose-h3:mb-0 min-h-screen">
@@ -153,9 +153,12 @@ export async function getServerSideProps() {
     // const responseJSON: CovidUpdate = await response.json();
     const responseText: string = await response.text();
 
+    const placeholder = await fetch('https://jsonplaceholder.typicode.com/todos/1')
+    const jsonPlaceholder = await placeholder.json();
+
     return {
         props: {
-            value: responseText
+            value: jsonPlaceholder
         }
     }
 }
