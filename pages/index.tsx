@@ -110,7 +110,7 @@ const Home: NextPage<string> = ({value}: string) => {
 
     return (
         <div>
-            <p>{value}</p>
+            Hello
         </div>
         // <div
         //     className="flex justify-center prose prose-gray prose-lg sm:prose-xl xl:prose-2xl bg-gray-50 max-w-none prose-h3:mb-0 min-h-screen">
