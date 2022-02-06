@@ -19,6 +19,7 @@ interface DailyUpdateProperty {
     datas: Data[]
 }
 
+// @ts-ignore
 const Home: NextPage<string> = ({value}: string) => {
     // const dailyUpdateProperty: DailyUpdateProperty[] = [
     //     {
