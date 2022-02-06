@@ -142,9 +142,6 @@ const Home: NextPage<CovidUpdate> = ({value}: CovidUpdate) => {
 export async function getStaticProps() {
     const response = await fetch(`${URL_PATH}/update.json`);
     const responseJSON: CovidUpdate = await response.json();
-
-    console.log(responseJSON);
-
     return {
         props: {
             value: responseJSON
