@@ -111,6 +111,7 @@ const Home: NextPage<CovidUpdate> = ({value}: CovidUpdate) => {
     return (
         <div
             className="flex justify-center prose prose-gray prose-lg sm:prose-xl xl:prose-2xl bg-gray-50 max-w-none prose-h3:mb-0 min-h-screen">
+            <title>Covid 19 Tracker</title>
             <div className="p-5 xl:w-2/3">
                 <h1 className="text- text-transparent text-center bg-gradient-to-br from-pink-500 to-purple-500 bg-clip-text">Indonesia
                     Covid-19 Tracker</h1>
@@ -139,7 +140,7 @@ const Home: NextPage<CovidUpdate> = ({value}: CovidUpdate) => {
     )
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
     const response = await fetch(`${URL_PATH}/update.json`, {
         method: "GET",
         headers: {
@@ -147,11 +148,11 @@ export async function getStaticProps() {
         }
     });
     const responseJSON: CovidUpdate = await response.json();
+    console.log(responseJSON);
     return {
         props: {
             value: responseJSON
-        }, // will be passed to the page component as props
-        revalidate: 60
+        }
     }
 }
 
