@@ -4,7 +4,7 @@ import {EmojiHappyIcon, EmojiSadIcon, PlusCircleIcon, XCircleIcon, EyeIcon} from
 
 import * as React from "react";
 
-const URL_PATH = 'https://data.covid19.go.id/public/api';
+const URL_PATH = 'https://data.covid19.go.id/public/api/';
 
 type Data = {
     icon: HeroIcon,
