@@ -1,5 +1,20 @@
 import * as React from "react";
 
+export type HeroIcon = (props: React.ComponentProps<'svg'>) => JSX.Element;
+
+export type Data = {
+    icon: HeroIcon,
+    iconColor: string,
+    title: string,
+    value: string
+};
+
+export interface DailyUpdateProperty {
+    heading: string,
+    updated: string,
+    datas: Data[]
+}
+
 export interface CovidUpdate {
     value: {
         data: TotalSpecimen,
@@ -10,8 +25,6 @@ export interface CovidUpdate {
         }
     }
 }
-
-export type HeroIcon = (props: React.ComponentProps<'svg'>) => JSX.Element;
 
 interface TotalSpecimen {
     id: number,
