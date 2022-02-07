@@ -1,4 +1,4 @@
-import type {NextPage} from 'next'
+import type {GetStaticProps, NextPage} from 'next'
 import {CovidUpdate, HeroIcon} from "../interfaces/general";
 import {EmojiHappyIcon, EmojiSadIcon, PlusCircleIcon, XCircleIcon, EyeIcon} from "@heroicons/react/outline"
 
@@ -140,7 +140,7 @@ const Home: NextPage<CovidUpdate> = ({value}: CovidUpdate) => {
     )
 }
 
-export async function getServerSideProps() {
+export const getStaticProps: GetStaticProps = async () => {
     const response = await fetch(`${URL_PATH}/update.json`, {
         method: "GET",
         headers: {
@@ -148,11 +148,11 @@ export async function getServerSideProps() {
         }
     });
     const responseJSON: CovidUpdate = await response.json();
-    console.log(responseJSON);
     return {
         props: {
             value: responseJSON
-        }
+        },
+        revalidate: 21600
     }
 }
 
