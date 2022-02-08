@@ -1,11 +1,11 @@
 import type {GetStaticProps, NextPage} from 'next'
-import {CovidUpdate} from "../interfaces/general";
+import {Case} from "../interfaces/general";
 import * as React from "react";
 import Infection from "../components/infection";
 
 const URL_PATH = 'https://data.covid19.go.id/public/api/';
 
-const Home: NextPage<CovidUpdate> = ({value}: CovidUpdate) => {
+const Home: NextPage<Case> = ({value}: Case) => {
     return (
         <div
             className="flex justify-center prose prose-gray prose-lg sm:prose-xl xl:prose-2xl bg-gray-50 max-w-none prose-h3:mb-0 min-h-screen">
@@ -26,7 +26,7 @@ export const getStaticProps: GetStaticProps = async () => {
             "User-Agent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Mobile Safari/537.36"
         }
     });
-    const responseJSON: CovidUpdate = await response.json();
+    const responseJSON: Case = await response.json();
     return {
         props: {
             value: responseJSON

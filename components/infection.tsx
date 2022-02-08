@@ -1,4 +1,4 @@
-import {CovidUpdate, DailyUpdateProperty, Data} from "../interfaces/general";
+import {Case, CardSection, Card} from "../interfaces/general";
 import * as React from "react";
 import {
     ClipboardCheckIcon,
@@ -9,8 +9,8 @@ import {
     XCircleIcon
 } from "@heroicons/react/outline";
 
-function Infection({value}: CovidUpdate) {
-    const dailyUpdateProperty: DailyUpdateProperty[] = [
+function Infection({value}: Case) {
+    const dailyUpdateProperty: CardSection[] = [
         {
             heading: 'Daily Update',
             updated: value.update.penambahan.created,
@@ -98,19 +98,19 @@ function Infection({value}: CovidUpdate) {
     ]
 
     return (
-        <>{dailyUpdateProperty.map((props: DailyUpdateProperty, index: number) => {
+        <>{dailyUpdateProperty.map((section: CardSection, index: number) => {
             return (
                 <div key={index}>
-                    <h3>{props.heading}</h3>
-                    {index === 0 ? <span className="text-sm font-light">Last Updated: {props.updated}</span> :
+                    <h3>{section.heading}</h3>
+                    {index === 0 ? <span className="text-sm font-light">Last Updated: {section.updated}</span> :
                         <span> </span>}
                     <div className="not-prose w-full grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 mt-3">
-                        {props.datas.map((data: Data, index: number) => {
+                        {section.datas.map((card: Card, index: number) => {
                             return (
                                 <div key={index} className="rounded-lg p-3 shadow-lg">
-                                    <data.icon className={`w-6 h-6 ${data.iconColor}`}/>
-                                    <span className="text-xl text-gray-900 font-semibold">{data.value}</span>
-                                    <p className="font-light text-sm">{data.title}</p>
+                                    <card.icon className={`w-6 h-6 ${card.iconColor}`}/>
+                                    <span className="text-xl text-gray-900 font-semibold">{card.value}</span>
+                                    <p className="font-light text-sm">{card.title}</p>
                                 </div>
                             )
                         })}

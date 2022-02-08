@@ -2,20 +2,20 @@ import * as React from "react";
 
 export type HeroIcon = (props: React.ComponentProps<'svg'>) => JSX.Element;
 
-export type Data = {
+export type Card = {
     icon: HeroIcon,
     iconColor: string,
     title: string,
     value: string
 };
 
-export interface DailyUpdateProperty {
+export interface CardSection {
     heading: string,
     updated: string,
-    datas: Data[]
+    datas: Card[]
 }
 
-export interface CovidUpdate {
+export interface Case {
     value: {
         data: TotalSpecimen,
         update: {
