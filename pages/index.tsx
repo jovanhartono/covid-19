@@ -11,7 +11,7 @@ const Home: NextPage<Case> = ({value}: Case) => {
             className="flex justify-center prose prose-gray prose-lg sm:prose-xl xl:prose-2xl bg-gray-50 max-w-none prose-h3:mb-0 min-h-screen">
             <title>Covid 19 Tracker</title>
             <div className="p-5 xl:w-2/3">
-                <h1 className="text- text-transparent text-center bg-gradient-to-br from-pink-500 to-purple-500 bg-clip-text">Indonesia
+                <h1 className="text-transparent text-center bg-gradient-to-br from-pink-500 to-purple-500 bg-clip-text">Indonesia
                     Covid-19 Tracker</h1>
                 <Infection value={value}/>
             </div>
