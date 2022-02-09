@@ -9,7 +9,11 @@ import {
     XCircleIcon
 } from "@heroicons/react/outline";
 
-function Infection({value}: Case) {
+interface InfectionProps{
+    value: Case
+}
+
+function Infection({value}: InfectionProps) {
     const dailyUpdateProperty: CardSection[] = [
         {
             heading: 'Daily Update',
