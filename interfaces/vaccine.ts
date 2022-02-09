@@ -1,8 +1,6 @@
-export interface VaccineSpecimen{
-    value: {
-        pemeriksaan: Specimen[];
-        vaksinasi: Vaccine[];
-    }
+export interface VaccineSpecimen {
+    pemeriksaan: Specimen;
+    vaksinasi: Vaccine;
 }
 
 interface Specimen {
