@@ -16,13 +16,11 @@ export interface CardSection {
 }
 
 export interface Case {
-    value: {
-        data: TotalSpecimen,
-        update: {
-            penambahan: AdditionalCase,
-            harian: DailyCase[],
-            total: TotalCase
-        }
+    data: TotalSpecimen,
+    update: {
+        penambahan: AdditionalCase,
+        harian: DailyCase[],
+        total: TotalCase
     }
 }
 
