@@ -60,18 +60,18 @@ interface Vaccine {
         {
             key_as_string: string,
             key: number,
-            doc_count: 1,
+            doc_count: number,
             jumlah_vaksinasi_2: {
-                value: 0
+                value: number
             },
             jumlah_vaksinasi_1: {
-                value: 0
+                value: number
             },
             jumlah_jumlah_vaksinasi_1_kum: {
-                value: 0
+                value: number
             },
             jumlah_jumlah_vaksinasi_2_kum: {
-                value: 0
+                value: number
             }
         }
     ],
