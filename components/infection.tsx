@@ -1,101 +1,128 @@
-import {Case, CardSection, Card} from "../interfaces/general";
+import {Case, CardSection} from "../interfaces/general";
 import * as React from "react";
 import {
     ClipboardCheckIcon,
     EmojiHappyIcon,
     EmojiSadIcon,
-    EyeIcon, MinusIcon,
+    MinusIcon,
     PlusCircleIcon,
-    XCircleIcon
+    XCircleIcon,
+    BeakerIcon
 } from "@heroicons/react/outline";
+import Cards from "./card";
+import {VaccineSpecimen} from "../interfaces/vaccine";
 
 interface InfectionProps{
-    value: Case
+    cases: Case,
+    vaccine: VaccineSpecimen
 }
 
-function Infection({value}: InfectionProps) {
+function Infection({cases, vaccine}: InfectionProps) {
     const dailyUpdateProperty: CardSection[] = [
         {
             heading: 'Daily Update',
-            updated: value.update.penambahan.created,
+            updated: cases.update.penambahan.created,
             datas: [
                 {
                     icon: PlusCircleIcon,
                     iconColor: 'text-red-500',
                     title: 'New Infections',
-                    value: value.update.penambahan.jumlah_positif.toLocaleString('id-ID')
+                    value: cases.update.penambahan.jumlah_positif.toLocaleString('id-ID')
                 },
                 {
                     icon: XCircleIcon,
                     iconColor: 'text-red-500',
                     title: 'Deaths',
-                    value: value.update.penambahan.jumlah_meninggal.toLocaleString('id-ID')
+                    value: cases.update.penambahan.jumlah_meninggal.toLocaleString('id-ID')
                 },
                 {
                     icon: EmojiSadIcon,
                     iconColor: 'text-red-500',
                     title: 'Hospitalized',
-                    value: value.update.penambahan.jumlah_dirawat.toLocaleString('id-ID')
+                    value: cases.update.penambahan.jumlah_dirawat.toLocaleString('id-ID')
                 },
                 {
                     icon: EmojiHappyIcon,
-                    iconColor: 'text-teal-500',
+                    iconColor: 'text-emerald-500',
                     title: 'Recovered',
-                    value: value.update.penambahan.jumlah_sembuh.toLocaleString('id-ID')
+                    value: cases.update.penambahan.jumlah_sembuh.toLocaleString('id-ID')
+                },
+                {
+                    icon: BeakerIcon,
+                    iconColor: 'text-emerald-500',
+                    title: 'First Dose',
+                    value: vaccine.vaksinasi.penambahan.jumlah_vaksinasi_1.toLocaleString('id-ID')
+                },
+                {
+                    icon: BeakerIcon,
+                    iconColor: 'text-emerald-500',
+                    title: 'Second Dose',
+                    value: vaccine.vaksinasi.penambahan.jumlah_vaksinasi_2.toLocaleString('id-ID')
+                },
+                {
+                    icon: ClipboardCheckIcon,
+                    iconColor: 'text-gray-500',
+                    title: 'PCR',
+                    value: vaccine.pemeriksaan.penambahan.jumlah_spesimen_pcr_tcm.toLocaleString('id-ID')
+                },
+                {
+                    icon: ClipboardCheckIcon,
+                    iconColor: 'text-gray-500',
+                    title: 'Antigen',
+                    value: vaccine.pemeriksaan.penambahan.jumlah_spesimen_antigen.toLocaleString('id-ID')
                 }
             ]
         },
         {
             heading: 'Accumulation',
-            updated: value.update.penambahan.created,
             datas: [
                 {
                     icon: PlusCircleIcon,
                     iconColor: 'text-red-500',
                     title: 'Infections',
-                    value: value.update.total.jumlah_positif.toLocaleString('id-ID')
+                    value: cases.update.total.jumlah_positif.toLocaleString('id-ID')
                 },
                 {
                     icon: XCircleIcon,
                     iconColor: 'text-red-500',
                     title: 'Deaths',
-                    value: value.update.total.jumlah_meninggal.toLocaleString('id-ID')
+                    value: cases.update.total.jumlah_meninggal.toLocaleString('id-ID')
                 },
                 {
                     icon: EmojiSadIcon,
                     iconColor: 'text-red-500',
                     title: 'Hospitalized',
-                    value: value.update.total.jumlah_dirawat.toLocaleString('id-ID')
+                    value: cases.update.total.jumlah_dirawat.toLocaleString('id-ID')
                 },
                 {
                     icon: EmojiHappyIcon,
                     iconColor: 'text-teal-500',
                     title: 'Recovered',
-                    value: value.update.total.jumlah_sembuh.toLocaleString('id-ID')
-                }
-            ]
-        },
-        {
-            heading: 'Specimen',
-            updated: '',
-            datas: [
+                    value: cases.update.total.jumlah_sembuh.toLocaleString('id-ID')
+                },
                 {
-                    icon: EyeIcon,
-                    iconColor: 'text-gray-500',
-                    title: 'ODP',
-                    value: value.data.jumlah_odp.toLocaleString('id-ID')
+                    icon: BeakerIcon,
+                    iconColor: 'text-emerald-500',
+                    title: 'First Dose',
+                    value: vaccine.vaksinasi.total.jumlah_vaksinasi_1.toLocaleString('id-ID')
+                },
+                {
+                    icon: BeakerIcon,
+                    iconColor: 'text-emerald-500',
+                    title: 'Second Dose',
+                    value: vaccine.vaksinasi.total.jumlah_vaksinasi_2.toLocaleString('id-ID')
                 },
                 {
                     icon: ClipboardCheckIcon,
                     iconColor: 'text-gray-500',
                     title: 'Total Tested',
-                    value: value.data.total_spesimen.toLocaleString('id-ID')
+                    value: cases.data.total_spesimen.toLocaleString('id-ID')
                 },
                 {
                     icon: MinusIcon,
-                    iconColor: 'text-rose-500',
+                    iconColor: 'text-emerald-500',
                     title: 'Tested Negative',
-                    value: value.data.total_spesimen_negatif.toLocaleString('id-ID')
+                    value: cases.data.total_spesimen_negatif.toLocaleString('id-ID')
                 }
             ]
         }
@@ -106,19 +133,9 @@ function Infection({value}: InfectionProps) {
             return (
                 <div key={index}>
                     <h3>{section.heading}</h3>
-                    {index === 0 ? <span className="text-sm font-light">Last Updated: {section.updated}</span> :
+                    {section.updated !== undefined ? <span className="text-sm font-light">Last Updated: {section.updated}</span> :
                         <span> </span>}
-                    <div className="not-prose w-full grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 mt-3">
-                        {section.datas.map((card: Card, index: number) => {
-                            return (
-                                <div key={index} className="rounded-lg p-3 shadow-lg">
-                                    <card.icon className={`w-6 h-6 ${card.iconColor}`}/>
-                                    <span className="text-xl text-gray-900 font-semibold">{card.value}</span>
-                                    <p className="font-light text-sm">{card.title}</p>
-                                </div>
-                            )
-                        })}
-                    </div>
+                    <Cards section={section} />
                 </div>
             )
         })}
