@@ -11,7 +11,7 @@ export type Card = {
 
 export interface CardSection {
     heading: string,
-    updated: string,
+    updated?: string,
     datas: Card[]
 }
 
