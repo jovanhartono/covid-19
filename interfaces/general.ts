@@ -1,17 +1,28 @@
 import * as React from "react";
 
-export interface CovidUpdate {
-    value: {
-        data: TotalSpecimen,
-        update: {
-            penambahan: AdditionalCase,
-            harian: DailyCase[],
-            total: TotalCase
-        }
-    }
+export type HeroIcon = (props: React.ComponentProps<'svg'>) => JSX.Element;
+
+export type Card = {
+    icon: HeroIcon,
+    iconColor: string,
+    title: string,
+    value: string
+};
+
+export interface CardSection {
+    heading: string,
+    updated?: string,
+    datas: Card[]
 }
 
-export type HeroIcon = (props: React.ComponentProps<'svg'>) => JSX.Element;
+export interface Case {
+    data: TotalSpecimen,
+    update: {
+        penambahan: AdditionalCase,
+        harian: DailyCase[],
+        total: TotalCase
+    }
+}
 
 interface TotalSpecimen {
     id: number,
