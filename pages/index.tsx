@@ -2,10 +2,16 @@ import type {GetStaticProps, NextPage} from 'next'
 import {Case} from "../interfaces/general";
 import * as React from "react";
 import Infection from "../components/infection";
+import axios from "../config/axios";
+import {AxiosResponse} from "axios";
+import {VaccineSpecimen} from "../interfaces/vaccine";
 
-const URL_PATH = 'https://data.covid19.go.id/public/api/';
+interface IndexProps {
+    update: Case;
+    vaccine: VaccineSpecimen;
+}
 
-const Home: NextPage<Case> = ({value}: Case) => {
+const Home: NextPage<IndexProps> = ({update, vaccine}: IndexProps) => {
     return (
         <div
             className="flex justify-center prose prose-gray prose-lg sm:prose-xl xl:prose-2xl bg-gray-50 max-w-none prose-h3:mb-0 min-h-screen">
@@ -13,24 +19,20 @@ const Home: NextPage<Case> = ({value}: Case) => {
             <div className="p-5 xl:w-2/3">
                 <h1 className="text-transparent text-center bg-gradient-to-br from-pink-500 to-purple-500 bg-clip-text">Indonesia
                     Covid-19 Tracker</h1>
-                <Infection value={value}/>
+                <Infection value={update}/>
             </div>
         </div>
     )
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-    const response = await fetch(`${URL_PATH}/update.json`, {
-        method: "GET",
-        headers: {
-            "User-Agent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Mobile Safari/537.36"
-        }
-    });
-    const responseJSON: Case = await response.json();
+    const [update, vaccine]: [AxiosResponse<Case>, AxiosResponse<VaccineSpecimen>] = await Promise.all([
+        axios.get('update.json').then(response=> response.data),
+        axios.get('pemeriksaan-vaksinasi.json').then(response=> response.data)
+    ]);
+
     return {
-        props: {
-            value: responseJSON
-        },
+        props: {update, vaccine},
         revalidate: 21600
     }
 }
