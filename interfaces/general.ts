@@ -6,8 +6,7 @@ export type Card = {
     icon: HeroIcon,
     iconColor: string,
     title: string,
-    value: string,
-    slug?: string
+    value: string
 };
 
 export interface CardSection {

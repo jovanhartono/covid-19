@@ -76,7 +76,7 @@ interface Vaccine {
         }
     ],
     total: {
-        "jumlah_vaksinasi_1": number,
-        "jumlah_vaksinasi_2": number
+        jumlah_vaksinasi_1: number,
+        jumlah_vaksinasi_2: number
     }
 }
