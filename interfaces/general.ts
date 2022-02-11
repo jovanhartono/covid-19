@@ -2,11 +2,17 @@ import * as React from "react";
 
 export type HeroIcon = (props: React.ComponentProps<'svg'>) => JSX.Element;
 
+export interface ButtonFilter {
+    value: string,
+    label: string,
+    filter: number
+}
+
 export type Card = {
     icon: HeroIcon,
     iconColor: string,
     title: string,
-    value: string
+    value: number
 };
 
 export interface CardSection {
@@ -49,32 +55,32 @@ interface AdditionalCase {
     created: string
 }
 
-interface DailyCase {
-    "key_as_string": "2020-03-02T00:00:00.000Z",
-    "key": 1583107200000,
-    "doc_count": 1,
-    "jumlah_meninggal": {
-        "value": 0
+export interface DailyCase {
+    key_as_string: string,
+    key: number,
+    doc_count: number,
+    jumlah_meninggal: {
+        value: number
     },
-    "jumlah_sembuh": {
-        "value": 0
+    jumlah_sembuh: {
+        value: number
     },
-    "jumlah_positif": {
-        "value": 2
+    jumlah_positif: {
+        value: number
     },
-    "jumlah_dirawat": {
-        "value": 2
+    jumlah_dirawat: {
+        value: number
     },
-    "jumlah_positif_kum": {
-        "value": 2
+    jumlah_positif_kum: {
+        value: number
     },
-    "jumlah_sembuh_kum": {
-        "value": 0
+    jumlah_sembuh_kum: {
+        value: number
     },
-    "jumlah_meninggal_kum": {
-        "value": 0
+    jumlah_meninggal_kum: {
+        value: number
     },
-    "jumlah_dirawat_kum": {
-        "value": 2
+    jumlah_dirawat_kum: {
+        value: number
     }
 }
