@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import {ButtonFilter} from "../interfaces/general";
 
-export const ChartData: ButtonFilter[] = [
+export const buttonFilters: ButtonFilter[] = [
     {
         value: 'week',
         label: '1W',
