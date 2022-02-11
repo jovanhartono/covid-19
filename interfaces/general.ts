@@ -2,11 +2,17 @@ import * as React from "react";
 
 export type HeroIcon = (props: React.ComponentProps<'svg'>) => JSX.Element;
 
+export interface ButtonFilter {
+    value: string,
+    label: string,
+    filter: number
+}
+
 export type Card = {
     icon: HeroIcon,
     iconColor: string,
     title: string,
-    value: string
+    value: number
 };
 
 export interface CardSection {
