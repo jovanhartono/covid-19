@@ -1,7 +1,7 @@
 import type {GetStaticProps, NextPage} from 'next'
 import {Case} from "../interfaces/general";
 import * as React from "react";
-import Infection from "../components/infection";
+import Section from "../components/section";
 import axios from "../config/axios";
 import {AxiosResponse} from "axios";
 import {VaccineSpecimen} from "../interfaces/vaccine";
@@ -21,7 +21,7 @@ const Home: NextPage<IndexProps> = ({cases, vaccine}: IndexProps) => {
             </Head>
             <h1 className="text-transparent text-center bg-gradient-to-br from-pink-500 to-purple-500 bg-clip-text">Indonesia
                 Covid-19 Info</h1>
-            <Infection cases={cases} vaccine={vaccine}/>
+            <Section cases={cases} vaccine={vaccine}/>
         </>
     )
 }
