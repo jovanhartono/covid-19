@@ -62,7 +62,10 @@ function LineChartComponent({data, dataKey}: LineChartProps) {
         if (active) {
             return <div className="shadow-lg bg-white p-3 rounded-lg">
                 <h5>{dayjs(label).format('dddd, DD MMM YYYY')}</h5>
-                <h5 className="text-fuchsia-600">{payload ? payload[0].value.toLocaleString('id-ID') : null}</h5>
+                {
+                    //@ts-ignore
+                    <h5 className="text-fuchsia-600">{payload ? payload[0].value.toLocaleString('id-ID') : null}</h5>
+                }
             </div>
         }
         return null;
