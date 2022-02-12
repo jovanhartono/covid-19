@@ -3,7 +3,7 @@ export interface VaccineSpecimen {
     vaksinasi: Vaccine;
 }
 
-interface Specimen {
+export interface Specimen {
     penambahan: {
         jumlah_spesimen_pcr_tcm: number,
         jumlah_spesimen_antigen: number,
@@ -49,7 +49,7 @@ interface Specimen {
     };
 }
 
-interface Vaccine {
+export interface Vaccine {
     penambahan: {
         jumlah_vaksinasi_1: number,
         jumlah_vaksinasi_2: number,
