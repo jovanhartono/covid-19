@@ -132,9 +132,11 @@ function Section({cases, vaccine}: InfectionProps) {
         <>{dailyUpdateProperty.map((section: CardSection, index: number) => {
             return (
                 <div key={index}>
-                    <h3>{section.heading}</h3>
-                    {section.updated !== undefined ? <span className="text-sm font-light">Last Updated: {section.updated}</span> :
-                        <span> </span>}
+                    <h2>
+                        {section.heading}
+                        {section.updated !== undefined ? <p className="text-sm font-light">Last Updated: {section.updated}</p> :
+                            <span> </span>}
+                    </h2>
                     <Cards section={section} />
                 </div>
             )
