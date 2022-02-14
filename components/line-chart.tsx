@@ -1,6 +1,6 @@
 import {CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, TooltipProps, XAxis, YAxis} from "recharts";
 import dayjs from "dayjs";
-import React, {useState} from "react";
+import React, {useMemo, useState} from "react";
 import {DailyCase} from "../interfaces/general";
 import {NameType, ValueType} from "recharts/types/component/DefaultTooltipContent";
 import Dropdown from "./dropdown";
@@ -13,31 +13,30 @@ interface LineChartProps {
 }
 
 function LineChartComponent({data, dataKey}: LineChartProps) {
-    const [xAxisWidth, setXAxisWidth] = useState<number>(Math.max(...data.map(data => data[dataKey].value)).toString().length * 10 + 10);
-    const [chartData, setChartData] = useState<DailyCase[]>(data);
+    const [xAxisWidth, setXAxisWidth] = useState<number>(0);
+    const [dateFilter, setDateFilter] = useState<number>(0);
 
-    function filterData(dateFilter: number): void {
-        setChartData(() => {
-            const filteredData: DailyCase[] = data.filter((dailyCase: DailyCase) => dailyCase.key > dateFilter);
-            setXAxisWidth(() => Math.max(...filteredData.map(data => data[dataKey].value)).toString().length * 10 + 10)
-            return filteredData;
-        });
-    }
+    const filter = useMemo(() => {
+        const filteredData: DailyCase[] = data.filter((dailyCase: DailyCase) => dailyCase.key > dateFilter);
+        setXAxisWidth(() => Math.max(...filteredData.map(data => data[dataKey].value)).toString().length * 10 + 10)
+        return filteredData;
+    }, [dateFilter, dataKey]);
 
     return (
-        <div>
+        <div className="w-full">
             <div className="flex justify-between items-center mb-6">
                 <h2 className="!m-0">Daily Mortality</h2>
-                <Dropdown filterData={filterData} />
+                <Dropdown filterData={setDateFilter}/>
             </div>
-            <ResponsiveContainer width="100%" aspect={2}>
-                <LineChart data={chartData}>
+            <ResponsiveContainer width="100%" aspect={2} debounce={300}>
+                <LineChart data={filter}>
                     <XAxis
                         dataKey="key"
                         axisLine={false}
                         tickLine={false}
                         tickMargin={10}
                         height={40}
+                        padding={{left:30, right: 10}}
                         tickFormatter={(date: number) => dayjs(date).format('D/M/YYYY')}
                         interval={"preserveStartEnd"}
                     />
