@@ -16,7 +16,7 @@ const Home: NextPage<IndexProps> = ({cases, vaccine}: IndexProps) => {
     return (
         <>
             <Head>
-                <title>Covid-19 Info</title>
+                <title>Home</title>
                 <meta name="description" content="General Information About Novel Corona Virus 19 in Indonesia."/>
             </Head>
             <h1 className="text-transparent text-center bg-gradient-to-br from-pink-500 to-purple-500 bg-clip-text">Indonesia

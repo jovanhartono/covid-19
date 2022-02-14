@@ -4,7 +4,11 @@ module.exports = {
       "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+        fontFamily: {
+            'jakarta': 'Plus Jakarta Sans'
+        }
+    },
   },
   plugins: [
       require('@tailwindcss/typography'),
