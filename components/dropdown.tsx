@@ -26,7 +26,7 @@ function Dropdown({filterData}: DropdownProps) {
                 p-2 rounded-lg focus:outline-none`}>
                         {dropdownState.selectedLabel}
                         <ChevronDownIcon className={`${open ? 'text-fuchsia-700 transform rotate-180' : 'text-gray-900'} 
-                        w-4 h-4 ml-4 transition-all duration-200 ease-in`}/>
+                        w-4 h-4 ml-4 transition-all duration-200 ease-in-out`}/>
                     </Menu.Button>
                     <Transition
                         as={Fragment}
