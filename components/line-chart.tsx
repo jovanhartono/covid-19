@@ -9,26 +9,27 @@ type DataKey = "jumlah_meninggal" | "jumlah_positif";
 
 interface LineChartProps {
     data: DailyCase[],
-    dataKey: DataKey
+    dataKey: DataKey,
+    title: string
 }
 
-function LineChartComponent({data, dataKey}: LineChartProps) {
+function LineChartComponent({data, dataKey, title}: LineChartProps) {
     const [xAxisWidth, setXAxisWidth] = useState<number>(0);
     const [dateFilter, setDateFilter] = useState<number>(0);
 
     const filter = useMemo(() => {
         const filteredData: DailyCase[] = data.filter((dailyCase: DailyCase) => dailyCase.key > dateFilter);
-        setXAxisWidth(() => Math.max(...filteredData.map(data => data[dataKey].value)).toString().length * 10 + 10)
+        setXAxisWidth(() => Math.max(...filteredData.map(data => data[dataKey].value)).toString().length * 10 + 14)
         return filteredData;
-    }, [dateFilter, dataKey]);
+    }, [dateFilter]);
 
     return (
-        <div className="w-full">
+        <div>
             <div className="flex justify-between items-center mb-6">
-                <h2 className="!m-0">Daily Mortality</h2>
+                <h2 className="!m-0">{title}</h2>
                 <Dropdown filterData={setDateFilter}/>
             </div>
-            <ResponsiveContainer width="100%" aspect={2} debounce={300}>
+            <ResponsiveContainer width="100%" aspect={2} debounce={150}>
                 <LineChart data={filter}>
                     <XAxis
                         dataKey="key"
@@ -48,7 +49,7 @@ function LineChartComponent({data, dataKey}: LineChartProps) {
                         tickLine={false}
                         tickFormatter={(value: number) => value.toLocaleString('id-ID')}
                     />
-                    <Tooltip content={<CustomTooltip/>}/>
+                    <Tooltip content={<LineChartTooltip/>}/>
                     <CartesianGrid vertical={false} opacity={0.3}/>
                     <Line type="monotone" dataKey={`${dataKey}.value`} stroke="#d946ef" strokeWidth={2}
                           dot={false}/>
@@ -57,7 +58,7 @@ function LineChartComponent({data, dataKey}: LineChartProps) {
         </div>
     )
 
-    function CustomTooltip({active, payload, label}: TooltipProps<ValueType, NameType>) {
+    function LineChartTooltip({active, payload, label}: TooltipProps<ValueType, NameType>) {
         if (active) {
             return <div className="shadow-lg bg-white p-3 rounded-lg">
                 <h5>{dayjs(label).format('dddd, DD MMM YYYY')}</h5>
@@ -71,4 +72,4 @@ function LineChartComponent({data, dataKey}: LineChartProps) {
     }
 }
 
-export default LineChartComponent
+export default LineChartComponent;

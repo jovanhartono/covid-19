@@ -2,6 +2,12 @@ import * as React from "react";
 
 export type HeroIcon = (props: React.ComponentProps<'svg'>) => JSX.Element;
 
+export interface PieChartData {
+    label: string,
+    value: number,
+    fill: string
+}
+
 export interface ButtonFilter {
     value: string,
     label: string,
