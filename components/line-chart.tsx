@@ -1,9 +1,9 @@
 import {CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, TooltipProps, XAxis, YAxis} from "recharts";
 import dayjs from "dayjs";
 import React, {useMemo, useState} from "react";
-import {LineChartProps} from "../interfaces/general";
 import {NameType, ValueType} from "recharts/types/component/DefaultTooltipContent";
 import Dropdown from "./dropdown";
+import {LineChartProps} from "../interfaces/props";
 
 function LineChartComponent({data, title}: LineChartProps) {
     const [xAxisWidth, setXAxisWidth] = useState<number>(0);
@@ -11,7 +11,7 @@ function LineChartComponent({data, title}: LineChartProps) {
 
     const filter = useMemo(() => {
         const filteredData = data.filter(value => value.date > dateFilter);
-        setXAxisWidth(() => Math.max(...filteredData.map(data => data.value)).toString().length * 10 + 14)
+        setXAxisWidth(() => Math.max(...filteredData.map(data => data.value)).toString().length * 10 + 18)
         return filteredData;
     }, [dateFilter, data]);
 
@@ -36,6 +36,7 @@ function LineChartComponent({data, title}: LineChartProps) {
                     <YAxis
                         width={xAxisWidth}
                         tickMargin={10}
+                        domain={['dataMin', "auto"]}
                         tickCount={7}
                         axisLine={false}
                         tickLine={false}
