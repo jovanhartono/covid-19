@@ -8,6 +8,11 @@ export interface PieChartData {
     fill: string
 }
 
+export interface LineChartProps {
+    title: string,
+    data: { date: number, value: number }[]
+}
+
 export interface ButtonFilter {
     value: string,
     label: string,

@@ -1,27 +1,19 @@
 import {CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, TooltipProps, XAxis, YAxis} from "recharts";
 import dayjs from "dayjs";
 import React, {useMemo, useState} from "react";
-import {DailyCase} from "../interfaces/general";
+import {LineChartProps} from "../interfaces/general";
 import {NameType, ValueType} from "recharts/types/component/DefaultTooltipContent";
 import Dropdown from "./dropdown";
 
-type DataKey = "jumlah_meninggal" | "jumlah_positif";
-
-interface LineChartProps {
-    data: DailyCase[],
-    dataKey: DataKey,
-    title: string
-}
-
-function LineChartComponent({data, dataKey, title}: LineChartProps) {
+function LineChartComponent({data, title}: LineChartProps) {
     const [xAxisWidth, setXAxisWidth] = useState<number>(0);
-    const [dateFilter, setDateFilter] = useState<number>(0);
+    const [dateFilter, setDateFilter] = useState<number>(dayjs().subtract(1, 'month').valueOf());
 
     const filter = useMemo(() => {
-        const filteredData: DailyCase[] = data.filter((dailyCase: DailyCase) => dailyCase.key > dateFilter);
-        setXAxisWidth(() => Math.max(...filteredData.map(data => data[dataKey].value)).toString().length * 10 + 14)
+        const filteredData = data.filter(value => value.date > dateFilter);
+        setXAxisWidth(() => Math.max(...filteredData.map(data => data.value)).toString().length * 10 + 14)
         return filteredData;
-    }, [dateFilter]);
+    }, [dateFilter, data]);
 
     return (
         <div>
@@ -32,7 +24,7 @@ function LineChartComponent({data, dataKey, title}: LineChartProps) {
             <ResponsiveContainer width="100%" aspect={2} debounce={150}>
                 <LineChart data={filter}>
                     <XAxis
-                        dataKey="key"
+                        dataKey="date"
                         axisLine={false}
                         tickLine={false}
                         tickMargin={10}
@@ -51,7 +43,7 @@ function LineChartComponent({data, dataKey, title}: LineChartProps) {
                     />
                     <Tooltip content={<LineChartTooltip/>}/>
                     <CartesianGrid vertical={false} opacity={0.3}/>
-                    <Line type="monotone" dataKey={`${dataKey}.value`} stroke="#d946ef" strokeWidth={2}
+                    <Line type="monotone" dataKey={`value`} stroke="#d946ef" strokeWidth={2}
                           dot={false}/>
                 </LineChart>
             </ResponsiveContainer>

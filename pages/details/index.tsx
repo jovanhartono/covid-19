@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {GetStaticProps, NextPage} from "next";
 import {AxiosResponse} from "axios";
-import {Case, DailyCase, PieChartData} from "../../interfaces/general";
+import {Case, DailyCase, LineChartProps, PieChartData} from "../../interfaces/general";
 import axios from "../../config/axios";
 import {VaccineSpecimen} from "../../interfaces/vaccine";
 import LineChartComponent from "../../components/line-chart";
@@ -15,6 +15,8 @@ interface DetailsProps {
 const Details: NextPage<DetailsProps> = ({cases, vaccine}: DetailsProps) => {
     const dailyCases: DailyCase[] = cases.update.harian;
     const [vaccineData, setVaccineData] = useState<PieChartData[]>([]);
+    const [positiveData, setPositiveData] = useState<LineChartProps>({data:[], title: ''});
+    const [mortalityData, setMortalityData] = useState<LineChartProps>({data:[], title: ''});
 
     useEffect(() => {
         setVaccineData([
@@ -34,6 +36,16 @@ const Details: NextPage<DetailsProps> = ({cases, vaccine}: DetailsProps) => {
                 fill: '#d1d5db'
             }
         ]);
+
+        setPositiveData({
+            title: 'Confirmed Cases 🩺',
+            data: dailyCases.map((v: DailyCase) => ({date: v.key, value: v.jumlah_positif.value}))
+        });
+
+        setMortalityData({
+            title: 'Daily Mortality 💀',
+            data: dailyCases.map((v: DailyCase) => ({date: v.key, value: v.jumlah_meninggal.value}))
+        });
     }, []);
 
     return (
@@ -43,9 +55,9 @@ const Details: NextPage<DetailsProps> = ({cases, vaccine}: DetailsProps) => {
                 Details Page</h1>
             <div className={'w-full prose-sm'}>
                 <div className="grid md:grid-cols-2 gap-3">
-                    <LineChartComponent data={dailyCases} dataKey={"jumlah_positif"} title="Confirmed Cases 🩺"/>
-                    <LineChartComponent data={dailyCases} dataKey={"jumlah_meninggal"} title="Daily Mortality 💀"/>
-                    <PieChartComponent data={vaccineData} title="Vaccination" />
+                    <LineChartComponent data={positiveData.data} title={positiveData.title}/>
+                    <LineChartComponent data={mortalityData.data} title={mortalityData.title}/>
+                    <PieChartComponent data={vaccineData} title="Vaccination"/>
                 </div>
             </div>
         </>

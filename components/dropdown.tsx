@@ -9,7 +9,7 @@ interface DropdownProps {
 }
 
 function Dropdown({filterData}: DropdownProps) {
-    const [buttonActive, setButtonActive] = useState<{ active: string }>({active: 'forever'});
+    const [buttonActive, setButtonActive] = useState<{ active: string }>({active: 'month'});
     const [dropdownState, setSelectedLabel] = useState<{ selectedLabel: string, touched: boolean }>({
         selectedLabel: 'Filter',
         touched: false
