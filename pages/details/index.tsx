@@ -87,6 +87,6 @@ export const getStaticProps: GetStaticProps = async () => {
 
     return {
         props: {cases, vaccine},
-        revalidate: 21600
+        revalidate: 3600
     }
 }
