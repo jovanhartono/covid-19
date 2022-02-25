@@ -6,6 +6,18 @@ export interface PieChartProps {
     data: PieChartData[]
 }
 
+export interface ProvinceProps {
+    provinceData: ProvinceData[]
+}
+
+export interface ProvinceData {
+    provinsi: string;
+    kasus: number;
+    dirawat: number;
+    sembuh: number;
+    meninggal: number;
+}
+
 export interface PieChartData {
     label: string,
     value: number,
