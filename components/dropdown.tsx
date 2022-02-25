@@ -22,7 +22,7 @@ function Dropdown({filterData}: DropdownProps) {
                     <Menu.Button
                         className={`${dropdownState.touched ? 'text-fuchsia-700 border-fuchsia-500 font-normal' : 'text-gray-900'} 
                         ${open && 'border-fuchsia-500'}
-                text-xs md:text-base font-light drop-shadow-sm inline-flex items-center border hover:border-fuchsia-500 transition-all duration-200 ease-in-out
+                text-xs md:text-base font-light drop-shadow-sm inline-flex items-center border hover:border-fuchsia-500 transition-colors duration-200 ease-in-out
                 p-2 rounded-lg focus:outline-none`}>
                         {dropdownState.selectedLabel}
                         <ChevronDownIcon className={`${open ? 'text-fuchsia-700 transform rotate-180' : 'text-gray-900'} 

@@ -49,7 +49,7 @@ const Details: NextPage<DetailsProps> = ({cases, vaccine}: DetailsProps) => {
         });
 
         setTotalPositive({
-            title: 'Total Confirmed 💀',
+            title: 'Total Confirmed 🩺',
             data: dailyCases.map((v: DailyCase) => ({date: v.key, value: v.jumlah_positif_kum.value}))
         });
 
