@@ -56,27 +56,27 @@ export interface Vaccine {
         tanggal: string,
         created: string
     },
-    harian: [
-        {
-            key_as_string: string,
-            key: number,
-            doc_count: number,
-            jumlah_vaksinasi_2: {
-                value: number
-            },
-            jumlah_vaksinasi_1: {
-                value: number
-            },
-            jumlah_jumlah_vaksinasi_1_kum: {
-                value: number
-            },
-            jumlah_jumlah_vaksinasi_2_kum: {
-                value: number
-            }
-        }
-    ],
+    harian: DailyVaccine[],
     total: {
         jumlah_vaksinasi_1: number,
         jumlah_vaksinasi_2: number
+    }
+}
+
+export interface DailyVaccine {
+    key_as_string: string,
+    key: number,
+    doc_count: number,
+    jumlah_vaksinasi_2: {
+        value: number
+    },
+    jumlah_vaksinasi_1: {
+        value: number
+    },
+    jumlah_jumlah_vaksinasi_1_kum: {
+        value: number
+    },
+    jumlah_jumlah_vaksinasi_2_kum: {
+        value: number
     }
 }

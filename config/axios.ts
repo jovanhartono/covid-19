@@ -7,4 +7,8 @@ const instance: AxiosInstance = axios.create({
     baseURL: 'https://data.covid19.go.id/public/api/'
 });
 
+export const githubAPI: AxiosInstance = axios.create({
+    baseURL: 'https://apicovid19indonesia-v2.vercel.app/api/indonesia/'
+})
+
 export default instance;

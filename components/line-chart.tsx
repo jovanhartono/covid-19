@@ -1,37 +1,30 @@
 import {CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, TooltipProps, XAxis, YAxis} from "recharts";
 import dayjs from "dayjs";
 import React, {useMemo, useState} from "react";
-import {DailyCase} from "../interfaces/general";
 import {NameType, ValueType} from "recharts/types/component/DefaultTooltipContent";
 import Dropdown from "./dropdown";
+import {LineChartProps} from "../interfaces/props";
 
-type DataKey = "jumlah_meninggal" | "jumlah_positif";
-
-interface LineChartProps {
-    data: DailyCase[],
-    dataKey: DataKey
-}
-
-function LineChartComponent({data, dataKey}: LineChartProps) {
+function LineChartComponent({data, title}: LineChartProps) {
     const [xAxisWidth, setXAxisWidth] = useState<number>(0);
-    const [dateFilter, setDateFilter] = useState<number>(0);
+    const [dateFilter, setDateFilter] = useState<number>(dayjs().subtract(1, 'month').valueOf());
 
     const filter = useMemo(() => {
-        const filteredData: DailyCase[] = data.filter((dailyCase: DailyCase) => dailyCase.key > dateFilter);
-        setXAxisWidth(() => Math.max(...filteredData.map(data => data[dataKey].value)).toString().length * 10 + 10)
+        const filteredData = data.filter(value => value.date > dateFilter);
+        setXAxisWidth(() => Math.max(...filteredData.map(data => data.value)).toString().length * 10 + 18)
         return filteredData;
-    }, [dateFilter, dataKey]);
+    }, [dateFilter, data]);
 
     return (
-        <div className="w-full">
+        <div>
             <div className="flex justify-between items-center mb-6">
-                <h2 className="!m-0">Daily Mortality</h2>
+                <h2 className="!m-0">{title}</h2>
                 <Dropdown filterData={setDateFilter}/>
             </div>
-            <ResponsiveContainer width="100%" aspect={2} debounce={300}>
+            <ResponsiveContainer width="100%" aspect={2} debounce={150}>
                 <LineChart data={filter}>
                     <XAxis
-                        dataKey="key"
+                        dataKey="date"
                         axisLine={false}
                         tickLine={false}
                         tickMargin={10}
@@ -43,27 +36,27 @@ function LineChartComponent({data, dataKey}: LineChartProps) {
                     <YAxis
                         width={xAxisWidth}
                         tickMargin={10}
+                        domain={['dataMin', "auto"]}
                         tickCount={7}
                         axisLine={false}
                         tickLine={false}
                         tickFormatter={(value: number) => value.toLocaleString('id-ID')}
                     />
-                    <Tooltip content={<CustomTooltip/>}/>
+                    <Tooltip content={<LineChartTooltip/>}/>
                     <CartesianGrid vertical={false} opacity={0.3}/>
-                    <Line type="monotone" dataKey={`${dataKey}.value`} stroke="#d946ef" strokeWidth={2}
+                    <Line type="monotone" dataKey={`value`} stroke="#d946ef" strokeWidth={2}
                           dot={false}/>
                 </LineChart>
             </ResponsiveContainer>
         </div>
     )
 
-    function CustomTooltip({active, payload, label}: TooltipProps<ValueType, NameType>) {
+    function LineChartTooltip({active, payload, label}: TooltipProps<ValueType, NameType>) {
         if (active) {
             return <div className="shadow-lg bg-white p-3 rounded-lg">
                 <h5>{dayjs(label).format('dddd, DD MMM YYYY')}</h5>
                 {
-                    //@ts-ignore
-                    <h5 className="text-fuchsia-600">{payload ? payload[0].value.toLocaleString('id-ID') : null}</h5>
+                    <h5 className="text-fuchsia-600">{payload?.[0].value?.toLocaleString('id-ID')}</h5>
                 }
             </div>
         }
@@ -71,4 +64,4 @@ function LineChartComponent({data, dataKey}: LineChartProps) {
     }
 }
 
-export default LineChartComponent
+export default LineChartComponent;

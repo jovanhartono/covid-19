@@ -5,71 +5,72 @@ import {Case, DailyCase} from "../../interfaces/general";
 import axios from "../../config/axios";
 import {VaccineSpecimen} from "../../interfaces/vaccine";
 import LineChartComponent from "../../components/line-chart";
-import {Pie, ResponsiveContainer, PieChart, Tooltip} from "recharts";
-
-interface DetailsProps {
-    cases: Case;
-    vaccine: VaccineSpecimen;
-}
-
-type PieChartData = {
-    label: string,
-    value: number,
-    fill: string
-}
+import PieChartComponent from "../../components/pie-chart";
+import {DetailsProps, LineChartProps, PieChartProps} from "../../interfaces/props";
 
 const Details: NextPage<DetailsProps> = ({cases, vaccine}: DetailsProps) => {
     const dailyCases: DailyCase[] = cases.update.harian;
-    const [vaccineData, setVaccineData] = useState<PieChartData[]>();
+    const [vaccineData, setVaccineData] = useState<PieChartProps>({data:[], title: ''});
+    const [dailyPositive, setDailyPositive] = useState<LineChartProps>({data:[], title: ''});
+    const [totalPositive, setTotalPositive] = useState<LineChartProps>({data:[], title: ''});
+    const [dailyMortality, setDailyMortality] = useState<LineChartProps>({data:[], title: ''});
+    const [totalMortality, setTotalMortality] = useState<LineChartProps>({data:[], title: ''});
 
     useEffect(() => {
-        setVaccineData([
-            {
-                label: 'First Dose',
-                value: vaccine.vaksinasi.total.jumlah_vaksinasi_1 - vaccine.vaksinasi.total.jumlah_vaksinasi_2,
-                fill: '#a855f7'
-            },
-            {
-                label: 'Fully Vaccinated',
-                value: vaccine.vaksinasi.total.jumlah_vaksinasi_2,
-                fill: '#d946ef'
-            },
-            {
-                label: 'Not Vaccinated',
-                value: 273500000 - vaccine.vaksinasi.total.jumlah_vaksinasi_1,
-                fill: '#d1d5db'
-            }
-        ]);
+        setVaccineData({
+            title: 'Vaccination',
+            data: [
+                {
+                    label: 'First Dose',
+                    value: vaccine.vaksinasi.total.jumlah_vaksinasi_1 - vaccine.vaksinasi.total.jumlah_vaksinasi_2,
+                    fill: '#a855f7'
+                },
+                {
+                    label: 'Fully Vaccinated',
+                    value: vaccine.vaksinasi.total.jumlah_vaksinasi_2,
+                    fill: '#d946ef'
+                },
+                {
+                    label: 'Not Vaccinated',
+                    value: 273500000 - vaccine.vaksinasi.total.jumlah_vaksinasi_1,
+                    fill: '#d1d5db'
+                }
+            ]
+        });
+
+        setDailyPositive({
+            title: 'Confirmed Cases 🩺',
+            data: dailyCases.map((v: DailyCase) => ({date: v.key, value: v.jumlah_positif.value}))
+        });
+
+        setDailyMortality({
+            title: 'Daily Mortality 💀',
+            data: dailyCases.map((v: DailyCase) => ({date: v.key, value: v.jumlah_meninggal.value}))
+        });
+
+        setTotalPositive({
+            title: 'Total Confirmed 🩺',
+            data: dailyCases.map((v: DailyCase) => ({date: v.key, value: v.jumlah_positif_kum.value}))
+        });
+
+        setTotalMortality({
+            title: 'Total Mortality 💀',
+            data: dailyCases.map((v: DailyCase) => ({date: v.key, value: v.jumlah_meninggal_kum.value}))
+        });
     }, []);
 
     return (
         <>
-            <h1 className='text-transparent text-center bg-gradient-to-br from-pink-500 to-purple-500 bg-clip-text'>
+            <h1 className='text-transparent text-center bg-gradient-to-br from-pink-500 to-purple-500 bg-clip-text leading-normal
+            !leading-tight'>
                 Details Page</h1>
             <div className={'w-full prose-sm'}>
                 <div className="grid md:grid-cols-2 gap-3">
-                    <LineChartComponent data={dailyCases} dataKey={"jumlah_meninggal"}/>
-                    <LineChartComponent data={dailyCases} dataKey={"jumlah_positif"}/>
-                    <div className="w-full">
-                    </div>
-                    <div className="w-full">
-                        <ResponsiveContainer width="100%" aspect={2}>
-                            <PieChart>
-                                <Pie
-                                    data={vaccineData}
-                                    cx="50%"
-                                    cy="50%"
-                                    innerRadius={60}
-                                    outerRadius={80}
-                                    dataKey="value"
-                                    nameKey="label"
-                                    label={val => val.label}
-                                >
-                                </Pie>
-                                <Tooltip/>
-                            </PieChart>
-                        </ResponsiveContainer>
-                    </div>
+                    <LineChartComponent data={dailyPositive.data} title={dailyPositive.title}/>
+                    <LineChartComponent data={totalPositive.data} title={totalPositive.title}/>
+                    <LineChartComponent data={dailyMortality.data} title={dailyMortality.title}/>
+                    <LineChartComponent data={totalMortality.data} title={totalMortality.title}/>
+                    <PieChartComponent data={vaccineData.data} title={vaccineData.title}/>
                 </div>
             </div>
         </>
@@ -86,6 +87,6 @@ export const getStaticProps: GetStaticProps = async () => {
 
     return {
         props: {cases, vaccine},
-        revalidate: 21600
+        revalidate: 3600
     }
 }

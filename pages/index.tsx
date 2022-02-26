@@ -6,11 +6,7 @@ import axios from "../config/axios";
 import {AxiosResponse} from "axios";
 import {VaccineSpecimen} from "../interfaces/vaccine";
 import Head from "next/head";
-
-interface IndexProps {
-    cases: Case;
-    vaccine: VaccineSpecimen;
-}
+import {IndexProps} from "../interfaces/props";
 
 const Home: NextPage<IndexProps> = ({cases, vaccine}: IndexProps) => {
     return (
@@ -34,7 +30,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
     return {
         props: {cases, vaccine},
-        revalidate: 21600
+        revalidate: 3600
     }
 }
 

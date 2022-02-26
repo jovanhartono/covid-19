@@ -9,7 +9,7 @@ interface DropdownProps {
 }
 
 function Dropdown({filterData}: DropdownProps) {
-    const [buttonActive, setButtonActive] = useState<{ active: string }>({active: 'forever'});
+    const [buttonActive, setButtonActive] = useState<{ active: string }>({active: 'month'});
     const [dropdownState, setSelectedLabel] = useState<{ selectedLabel: string, touched: boolean }>({
         selectedLabel: 'Filter',
         touched: false
@@ -22,11 +22,11 @@ function Dropdown({filterData}: DropdownProps) {
                     <Menu.Button
                         className={`${dropdownState.touched ? 'text-fuchsia-700 border-fuchsia-500 font-normal' : 'text-gray-900'} 
                         ${open && 'border-fuchsia-500'}
-                text-base font-light drop-shadow-sm inline-flex items-center border hover:border-fuchsia-500 
+                text-xs md:text-base font-light drop-shadow-sm inline-flex items-center border hover:border-fuchsia-500 transition-colors duration-200 ease-in-out
                 p-2 rounded-lg focus:outline-none`}>
                         {dropdownState.selectedLabel}
                         <ChevronDownIcon className={`${open ? 'text-fuchsia-700 transform rotate-180' : 'text-gray-900'} 
-                        w-4 h-4 ml-4 transition-all duration-200 ease-in`}/>
+                        w-4 h-4 ml-4 transition-all duration-200 ease-in-out`}/>
                     </Menu.Button>
                     <Transition
                         as={Fragment}
