@@ -7,14 +7,12 @@ import {VaccineSpecimen} from "../../interfaces/vaccine";
 import LineChartComponent from "../../components/line-chart";
 import PieChartComponent from "../../components/pie-chart";
 import {DetailsProps, LineChartProps, PieChartProps} from "../../interfaces/props";
+import Head from "next/head";
 
 const Details: NextPage<DetailsProps> = ({cases, vaccine}: DetailsProps) => {
     const dailyCases: DailyCase[] = cases.update.harian;
-    const [vaccineData, setVaccineData] = useState<PieChartProps>({data:[], title: ''});
-    const [dailyPositive, setDailyPositive] = useState<LineChartProps>({data:[], title: ''});
-    const [totalPositive, setTotalPositive] = useState<LineChartProps>({data:[], title: ''});
-    const [dailyMortality, setDailyMortality] = useState<LineChartProps>({data:[], title: ''});
-    const [totalMortality, setTotalMortality] = useState<LineChartProps>({data:[], title: ''});
+    const [vaccineData, setVaccineData] = useState<PieChartProps>({data: [], title: ''});
+    const [detailsData, setDetailsData] = useState<LineChartProps[]>([]);
 
     useEffect(() => {
         setVaccineData({
@@ -38,38 +36,68 @@ const Details: NextPage<DetailsProps> = ({cases, vaccine}: DetailsProps) => {
             ]
         });
 
-        setDailyPositive({
-            title: 'Confirmed Cases 🩺',
-            data: dailyCases.map((v: DailyCase) => ({date: v.key, value: v.jumlah_positif.value}))
-        });
-
-        setDailyMortality({
-            title: 'Daily Mortality 💀',
-            data: dailyCases.map((v: DailyCase) => ({date: v.key, value: v.jumlah_meninggal.value}))
-        });
-
-        setTotalPositive({
-            title: 'Total Confirmed 🩺',
-            data: dailyCases.map((v: DailyCase) => ({date: v.key, value: v.jumlah_positif_kum.value}))
-        });
-
-        setTotalMortality({
-            title: 'Total Mortality 💀',
-            data: dailyCases.map((v: DailyCase) => ({date: v.key, value: v.jumlah_meninggal_kum.value}))
-        });
+        setDetailsData(() =>
+            [
+                {
+                    title: 'Confirmed Cases 🩺',
+                    data: dailyCases.map((v: DailyCase) => ({date: v.key, value: v.jumlah_positif.value}))
+                },
+                {
+                    title: 'Total Confirmed 🩺',
+                    data: dailyCases.map((v: DailyCase) => ({date: v.key, value: v.jumlah_positif_kum.value}))
+                },
+                {
+                    title: 'Daily Mortality 💀',
+                    data: dailyCases.map((v: DailyCase) => ({date: v.key, value: v.jumlah_meninggal.value}))
+                },
+                {
+                    title: 'Total Mortality 💀',
+                    data: dailyCases.map((v: DailyCase) => ({date: v.key, value: v.jumlah_meninggal_kum.value}))
+                },
+                {
+                    title: 'Daily Hospitalization',
+                    data: dailyCases.map((v: DailyCase) => ({date: v.key, value: v.jumlah_dirawat.value}))
+                },
+                {
+                    title: 'Total Hospitalization',
+                    data: dailyCases.map((v: DailyCase) => ({date: v.key, value: v.jumlah_dirawat_kum.value}))
+                },
+                {
+                    title: 'Daily Recovery',
+                    data: dailyCases.map((v: DailyCase) => ({date: v.key, value: v.jumlah_sembuh.value}))
+                },
+                {
+                    title: 'Total Recovery',
+                    data: dailyCases.map((v: DailyCase) => ({date: v.key, value: v.jumlah_sembuh_kum.value}))
+                },
+                {
+                    title: 'Daily Vaccination',
+                    data: vaccine.vaksinasi.harian.map(v => (
+                        {
+                            date: v.key,
+                            value: v.jumlah_vaksinasi_1.value,
+                            secondValue: v.jumlah_vaksinasi_2.value
+                        }
+                    ))
+                }
+            ]
+        )
     }, []);
 
     return (
         <>
-            <h1 className='text-transparent text-center bg-gradient-to-br from-pink-500 to-purple-500 bg-clip-text leading-normal
+            <Head>
+                <title>Details</title>
+                <meta name="description" content="Data Visualization About Novel Corona Virus 19 in Indonesia."/>
+            </Head>
+            <h1 className='text-transparent text-center bg-gradient-to-r from-pink-500 via-fuchsia-500 to-purple-500 bg-clip-text leading-normal
             !leading-tight'>
                 Details Page</h1>
             <div className={'w-full prose-sm'}>
                 <div className="grid md:grid-cols-2 gap-3">
-                    <LineChartComponent data={dailyPositive.data} title={dailyPositive.title}/>
-                    <LineChartComponent data={totalPositive.data} title={totalPositive.title}/>
-                    <LineChartComponent data={dailyMortality.data} title={dailyMortality.title}/>
-                    <LineChartComponent data={totalMortality.data} title={totalMortality.title}/>
+                    {detailsData.map((detailsData: LineChartProps, index: number) => {
+                        return <LineChartComponent title={detailsData.title} data={detailsData.data} key={index}/>
+                    })}
                     <PieChartComponent data={vaccineData.data} title={vaccineData.title}/>
                 </div>
             </div>

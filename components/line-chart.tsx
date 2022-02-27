@@ -5,7 +5,7 @@ import {NameType, ValueType} from "recharts/types/component/DefaultTooltipConten
 import Dropdown from "./dropdown";
 import {LineChartProps} from "../interfaces/props";
 
-function LineChartComponent({data, title}: LineChartProps) {
+function LineChartComponent({title, data}: LineChartProps) {
     const [xAxisWidth, setXAxisWidth] = useState<number>(0);
     const [dateFilter, setDateFilter] = useState<number>(dayjs().subtract(1, 'month').valueOf());
 
@@ -44,8 +44,8 @@ function LineChartComponent({data, title}: LineChartProps) {
                     />
                     <Tooltip content={<LineChartTooltip/>}/>
                     <CartesianGrid vertical={false} opacity={0.3}/>
-                    <Line type="monotone" dataKey={`value`} stroke="#d946ef" strokeWidth={2}
-                          dot={false}/>
+                    <Line type="monotone" dataKey={`value`} stroke="#d946ef" strokeWidth={2} dot={false}/>
+                    <Line type="monotone" dataKey={'secondValue'} stroke="#a855f7" strokeWidth={2} dot={false}/>
                 </LineChart>
             </ResponsiveContainer>
         </div>
@@ -56,7 +56,9 @@ function LineChartComponent({data, title}: LineChartProps) {
             return <div className="shadow-lg bg-white p-3 rounded-lg">
                 <h5>{dayjs(label).format('dddd, DD MMM YYYY')}</h5>
                 {
-                    <h5 className="text-fuchsia-600">{payload?.[0].value?.toLocaleString('id-ID')}</h5>
+                    payload?.map((v, idx: number) => (
+                        <h5 key={idx} className="text-fuchsia-600">{v.value?.toLocaleString('id-ID')}</h5>
+                    ))
                 }
             </div>
         }

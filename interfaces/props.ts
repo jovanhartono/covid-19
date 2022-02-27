@@ -36,5 +36,5 @@ export interface DetailsProps {
 
 export interface LineChartProps {
     title: string,
-    data: { date: number, value: number }[]
+    data: { date: number, value: number, secondValue?: number }[],
 }

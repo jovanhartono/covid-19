@@ -54,8 +54,11 @@ const Province: NextPage<ProvinceProps> = ({provinceData}: ProvinceProps) => {
                                     : filteredProvince.map((provinceData: ProvinceData, index: number) => (
                                         <Combobox.Option
                                             key={index} value={provinceData}
-                                            className="select-none cursor-default focus:outline-none text-gray-900
-                                            list-none text-sm p-2 m-0 font-light hover:bg-gradient-to-r hover:from-pink-500 hover:to-fuchsia-500 hover:text-white">
+                                            className={({active, selected}) => `select-none cursor-default focus:outline-none
+                                            list-none text-sm p-2 m-0 font-light
+                                            ${selected && 'bg-gradient-to-r from-pink-500 to-fuchsia-500 text-white'}
+                                            ${active && !selected ? 'text-white bg-gradient-to-r from-pink-500 to-fuchsia-500' : 'text-gray-900' }
+                                            `}>
                                             {provinceData.provinsi}
                                         </Combobox.Option>
                                     ))
