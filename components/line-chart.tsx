@@ -37,7 +37,7 @@ function LineChartComponent({title, data}: LineChartProps) {
                         width={xAxisWidth}
                         tickMargin={10}
                         domain={['dataMin', "auto"]}
-                        tickCount={7}
+                        tickCount={6}
                         axisLine={false}
                         tickLine={false}
                         tickFormatter={(value: number) => value.toLocaleString('id-ID')}
