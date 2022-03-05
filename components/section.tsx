@@ -12,7 +12,7 @@ import {
 import Cards from "./card";
 import {VaccineSpecimen} from "../interfaces/vaccine";
 
-interface InfectionProps{
+interface InfectionProps {
     cases: Case,
     vaccine: VaccineSpecimen
 }
