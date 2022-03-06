@@ -9,7 +9,7 @@ import {
     XCircleIcon,
     BeakerIcon
 } from "@heroicons/react/outline";
-import Cards from "./card";
+import CardComponent from "./card";
 import {VaccineSpecimen} from "../interfaces/vaccine";
 
 interface InfectionProps {
@@ -137,7 +137,7 @@ function Section({cases, vaccine}: InfectionProps) {
                         {section.updated !== undefined ? <p className="text-sm font-light">Last Updated: {section.updated}</p> :
                             <span> </span>}
                     </h2>
-                    <Cards section={section} />
+                    <CardComponent section={section} />
                 </div>
             )
         })}
