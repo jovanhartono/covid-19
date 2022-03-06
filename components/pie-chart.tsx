@@ -9,8 +9,8 @@ function PieChartComponent({title, data}: PieChartProps) {
             <div className="flex justify-between items-center mb-6">
                 <h2 className="!m-0">{title}</h2>
             </div>
-            <ResponsiveContainer width="100%" height={250} debounce={150}>
-                <PieChart >
+            <ResponsiveContainer width="100%" height={275} debounce={150}>
+                <PieChart>
                     <Pie
                         data={data}
                         cx="50%"
@@ -19,7 +19,7 @@ function PieChartComponent({title, data}: PieChartProps) {
                         outerRadius={80}
                         dataKey="value"
                         nameKey="label"
-                        label={val => `${val.value.toLocaleString('id-ID')} 💉`}
+                        label={val => `${val.value.toLocaleString('id-ID')}`}
                     >
                     </Pie>
                     <Tooltip content={<PieChartTooltip/>}/>
