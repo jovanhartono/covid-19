@@ -49,11 +49,7 @@ function Header() {
                     </Link>
                     <div onClick={() => setActive((currentState: boolean) => !currentState)}
                          className="p-1 cursor-pointer">
-                        {
-                            active ?
-                                <XIcon className="w-6 h-6"/> :
-                                <MenuAlt4Icon className="w-6 h-6"/>
-                        }
+                        <MenuAlt4Icon className="w-6 h-6"/>
                     </div>
                 </div>
             </header>
@@ -68,14 +64,19 @@ function Header() {
                 show={active}
             >
                 <div
-                    className={`fixed h-full bg-gray-50 top-0 right-0 z-30 pt-16 w-1/2 md:w-64 border-l px-4 py-2 flex flex-col justify-between`}>
+                    className={`fixed h-full bg-gray-50 top-0 right-0 z-30 w-1/2 md:w-64 border-l p-4 flex flex-col`}>
+                    <div className="flex items-center justify-between mb-3">
+                        <CubeIcon className="w-10 h-10 text-pink-500"/>
+                        <XIcon className="w-6 h-6"/>
+                    </div>
                     <nav className="not-prose">
                         <ul className="list-none">
                             {
                                 routes.map((route, index: number) => (
                                     <li key={index}>
                                         <Link href={route.path}>
-                                            <a className={`text-sm font-light ${router.pathname === route.path ? 'text-fuchsia-500' : 'text-gray-900'}
+                                            <a className={`text-base ${router.pathname === route.path ?
+                                                'text-transparent bg-gradient-to-r from-pink-500 via-fuchsia-500 to-purple-500 bg-clip-text font-semibold' : 'text-gray-900 font-light'}
                                             `}
                                                onClick={() => setActive(v => !v)}>{route.label}</a>
                                         </Link>
@@ -84,7 +85,9 @@ function Header() {
                             }
                         </ul>
                     </nav>
-                    <small className="font-light text-xs">by Jovanus Hartono</small>
+                    <small
+                        className="mt-auto font-light text-xs text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-fuchsia-500 to-purple-500">by
+                        Jovanus Hartono</small>
                 </div>
             </Transition>
         </>
